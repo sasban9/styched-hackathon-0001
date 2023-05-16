@@ -20,10 +20,37 @@ function Info() {
             })
     }, [])
 
-
+    const markAsCompleteHandler = () => {
+    }
 
     return (
-        <div>Info</div>
+        <div>
+            <div className='Info-title'>Details of tailor {tailor.name}</div>
+            <div className='Info-payment'>Your earn ₹{parseInt(tailor.payment / 6)} so far </div>
+            <div className='Info-order'>
+                <div className='Info-process-orders'>
+                    <div className='Info-process-title'>Process Order</div>
+                    {tailor.processOrders?.map((processOrder, index) => {
+                        return (
+                            <div className='Info-process-details'>
+                                <div className='Info-process-index'>Order No: {index + 1}</div>
+                                <div className='Info-process-order'>
+                                    {processOrder.sku?.map((skuUnit) => {
+                                        return (
+                                            <div className='Info-process-detail'>
+                                                <div>Design Name: {skuUnit.name}</div>
+                                                <div>Size: {skuUnit.size}</div>
+                                            </div>
+                                        )
+                                    })}
+                                    <button className='Info-markAsComplete-button' onClick={() => markAsCompleteHandler(processOrder)}>Mark as Complete</button>
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
+        </div>
     )
 }
 
