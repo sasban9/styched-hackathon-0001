@@ -131,6 +131,28 @@ app.post('/maintainPerDayOrder', async (req, res) => {
     tailor.save();
 })
 
+function addOrder() {
+
+    const skuArray = []
+    let totalPrice = 0
+    const noOfSkusInOrder = Math.floor(Math.random()*5) + 1
+    sizeArray = ['XS', 'S', 'M', 'L', 'XL']
+
+    for(var index = 0; index < noOfSkusInOrder; index++) {
+        const name = 'SKU-' + (Math.floor(Math.random() * 5000) + 1)
+        const size = sizeArray[Math.floor(Math.random() * 5)]
+        const price =  Math.floor(Math.random() * 651) + 345
+
+        skuArray.push(new Sku({name: name, size: size, price: price}))
+        totalPrice+=price
+    }
+    const order = new Order({sku: skuArray, price: totalPrice})
+    order.save()
+    .then(res => {
+        console.log('New order created')
+    }).catch(err => console.log(err))
+}
+
 // Connection with server
 app.listen(8000, () => {
     console.log('Server started on port 8000')
@@ -139,6 +161,7 @@ app.listen(8000, () => {
     mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
         .then(() => {
             console.log('Server connected with Database')
+            setInterval(addOrder, 86400)
         })
         .catch((err) => console.log(err))
 })
