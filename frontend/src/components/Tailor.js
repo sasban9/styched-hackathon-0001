@@ -18,7 +18,8 @@ function Tailor() {
             })
     }, [])
 
-    const goToTailor = () => {
+    // Redirected to Order page
+    const goToTailor = (username) => {
         window.location.href = username + '/allOpenOrders';
     }
 
