@@ -19,6 +19,7 @@ function Tailor() {
     }, [])
 
     const goToTailor = () => {
+        window.location.href = username + '/allOpenOrders';
     }
 
     // Function to call backend api for adding new tailor
