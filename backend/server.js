@@ -66,6 +66,18 @@ app.post('/addTailor', async (req, res) => {
         .catch(() => res.send({ code: 1, msg: 'Something wents wrong' }));
 })
 
+// Mark process order as completed and add payment to tailor account
+app.post('/markAsCompleteOrder', (req, res) => {
+    Tailor.updateOne(
+        {username: req.body.username},
+        {
+            $pull: {processOrders: req.body.order}, 
+            $push: {completeOrders: req.body.order},
+            $inc: {payment: req.body.order.price}
+        }
+    ).then(() => res.send('Order mark as complete'))
+})
+
 // Assign order to tailor if it is eligible
 app.post('/takeThisOrder', async (req, res) => {
     const tailor = await Tailor.findOne({username: req.body.username})

@@ -20,7 +20,12 @@ function Info() {
             })
     }, [])
 
-    const markAsCompleteHandler = () => {
+    // Mark process order as completed 
+    const markAsCompleteHandler = (processOrder) => {
+        axios.post('http://localhost:8000/markAsCompleteOrder', { username: tailorUsername, order: processOrder })
+            .then(res => {
+                window.location.reload();
+            })
     }
 
     return (
