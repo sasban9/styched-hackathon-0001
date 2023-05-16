@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const {Order, Sku, Tailor} = require('./module');
 const app = express();
 
+app.use(cors());
+
 uri = 'mongodb+srv://admin:admin@styched.63sksdt.mongodb.net/styched?retryWrites=true&w=majority'
 
 app.get('/getTailors', async (req, res) => {
