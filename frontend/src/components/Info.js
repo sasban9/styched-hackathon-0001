@@ -49,6 +49,26 @@ function Info() {
                         )
                     })}
                 </div>
+                <div className='Info-complete-orders'>
+                    <div className='Info-complete-title'>Completed Order</div>
+                    {tailor.completeOrders?.map((completeOrder, index) => {
+                        return (
+                            <div className='Info-complete-details'>
+                                <div className='Info-complete-index'>Order No: {index + 1}</div>
+                                <div className='Info-complete-order'>
+                                    {completeOrder.sku?.map((skuUnit) => {
+                                        return (
+                                            <div className='Info-complete-detail'>
+                                                <div>Design Name: {skuUnit.name}</div>
+                                                <div>Size: {skuUnit.size}</div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
         </div>
     )
