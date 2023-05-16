@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './Order.css';
@@ -20,7 +20,7 @@ function Order() {
                 } else {
                     // Maintain the per day order  
                     axios.post('http://localhost:8000/maintainPerDayOrder', { username: tailorUsername })
-                    
+
                     // Fetch all order data
                     axios.get('http://localhost:8000/getOrders')
                         .then(res => {
@@ -29,8 +29,42 @@ function Order() {
                 }
             })
     }, [])
+
+
+    const goToInfo = () => {
+    }
+
+    const orderTakingHandler = () => {
+        
+    }
+
     return (
-        <div>Order</div>
+        <div className='Orders'>
+            <button className='tailor-info-button' onClick={() => goToInfo()}>Click here for User Details</button>
+            <div className='order-title'>All Open Orders</div>
+            <div className='orders'>
+                {orders.map((order, index) => {
+                    const skuUnits = order.sku;
+                    return (
+                        <div className='order' key={index} onClick={() => orderTakingHandler(order)}>
+                            <div className='order-skuUnits-title'>This order consist of {skuUnits.length} units:</div>
+                            <div className='order-skuUnits'>
+                                {skuUnits.map((skuUnit, index) => {
+                                    return (
+                                        <div className='order-skuUnit' key={index + '0'}>
+                                            <div className='order-skuUnit-name' key={index}>Design name: {skuUnit.name}</div>
+                                            <div className='order-skuUnit-size' key={index}>Size: {skuUnit.size}</div>
+                                            <div className='order-skuUnit-price' key={index}>Price: ₹{skuUnit.price}</div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                            <div className='order-skuUnits-price'>Total Order Value: ₹{order.price}</div>
+                        </div>
+                    )
+                })}
+            </div>
+        </div>
     )
 }
 
