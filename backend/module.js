@@ -1,0 +1,29 @@
+const mongoose = require('mongoose');
+
+const skuSchema = new mongoose.Schema({
+    name: String,
+    size: String,
+    price: Number,
+})
+
+const orderSchema = new mongoose.Schema({
+    sku: [skuSchema],
+    price: Number
+})
+
+const tailorSchema = new mongoose.Schema({
+    name: String,
+    username: String,
+    processOrders: [orderSchema],
+    completeOrders: [orderSchema],
+    todayOrders: [{todayOrder: orderSchema, date: String}],
+    payment: Number
+})
+
+
+const orderModel = new mongoose.model('Order', orderSchema)
+const skuModel = new mongoose.model('Sku', skuSchema)
+const tailorModel = new mongoose.model('Tailor', tailorSchema)
+
+
+module.exports = {Order: orderModel, Sku: skuModel, Tailor: tailorModel}
