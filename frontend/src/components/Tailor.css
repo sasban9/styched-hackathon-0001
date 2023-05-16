@@ -5,9 +5,17 @@
     margin-bottom: 1%;
 }
 
-.tailor {
-    margin: 1.5rem auto auto auto;
-    width: 30rem;
+.tailor-add-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: auto;
+    background-color: cyan;
+    padding: 1%;
+    width: 20rem;
+    border-radius: 1rem;  
+    gap: .5rem;
 }
 
 .tailor-input-name {
@@ -22,6 +30,19 @@
     border-color: black;
     text-align: center;
     height: 1.5rem;
+}
+
+.tailor-input-button {
+    border-radius: 1rem;
+    border-color: black;
+    text-align: center;
+    width: 7rem;
+    background-color: lightblue;
+}
+
+.tailor {
+    margin: 1.5rem auto auto auto;
+    width: 30rem;
 }
 
 .tailor-info {

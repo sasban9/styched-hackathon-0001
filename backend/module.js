@@ -1,16 +1,19 @@
 const mongoose = require('mongoose');
 
+// Schema for each sku unit
 const skuSchema = new mongoose.Schema({
     name: String,
     size: String,
     price: Number,
 })
 
+// Schema of Order
 const orderSchema = new mongoose.Schema({
     sku: [skuSchema],
     price: Number
 })
 
+// Schema of tailor
 const tailorSchema = new mongoose.Schema({
     name: String,
     username: String,
