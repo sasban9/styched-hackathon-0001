@@ -32,10 +32,21 @@ function Order() {
 
 
     const goToInfo = () => {
+        window.location.href = '/' + tailorUsername + '/info';
     }
 
-    const orderTakingHandler = () => {
-        
+    const orderTakingHandler = (order) => {
+        const result = window.confirm('Do you want to take this order ?');
+        if (result) {
+            axios.post('http://localhost:8000/takeThisOrder', { username: tailorUsername, order: order })
+                .then(res => {
+                    if (res.data.code === 1) {
+                        window.alert(res.data.msg);
+                    } else {
+                        window.location.reload();
+                    }
+                })
+        }
     }
 
     return (

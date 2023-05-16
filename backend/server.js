@@ -66,6 +66,46 @@ app.post('/addTailor', async (req, res) => {
         .catch(() => res.send({ code: 1, msg: 'Something wents wrong' }));
 })
 
+// Assign order to tailor if it is eligible
+app.post('/takeThisOrder', async (req, res) => {
+    const tailor = await Tailor.findOne({username: req.body.username})
+
+    // Calculate total today order become and different unique sku
+    let todayOrderWillBecome = 0
+    var todaySkuWillBecome = new Set()
+
+    // Travel on todayOrderData
+    tailor.todayOrders.forEach(todayOrderData => {
+        if (todayOrderData.date == getTodayDMY()) {
+            todayOrderWillBecome += todayOrderData.todayOrder.sku.length;
+            todayOrderData.todayOrder.sku.forEach(sku => todaySkuWillBecome.add(sku.name));
+        }
+    })
+
+    todayOrderWillBecome += req.body.order.sku.length
+    req.body.order.sku.forEach(sku => todaySkuWillBecome.add(sku.name))
+
+    // Verify is tailor eligible for this order
+    if (10 < todayOrderWillBecome) {
+        res.send({code: 1, msg: `You can't take more than 10 unit of SKU in a single day`})
+    } else if (5 < todaySkuWillBecome.length) {
+        res.send({code: 1, msg: `You can't take more than 5 time of same SKU unit in a single day`})
+    } else {
+
+        // if eligible then assign order to tailor
+        tailor.processOrders.push(req.body.order);
+        tailor.todayOrders.push({todayOrder: req.body.order, date: getTodayDMY()});
+        tailor.save()
+        .then(() => {
+
+            // delete order from order list
+            Order.deleteOne({_id: req.body.order._id})
+            .then(() => res.send({code: 2, msg: 'Order assign to tailor'}))
+        })
+    }
+})
+
+
 // Maintain the per day order
 app.post('/maintainPerDayOrder', async (req, res) => {
     const tailor = await Tailor.findOne({ username: req.body.username })
