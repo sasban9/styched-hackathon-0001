@@ -18,8 +18,8 @@
 }
 
 .orders {
-    display: grid;
-    grid-template-columns: repeat(2, auto);
+    /* display: grid; */
+    grid-template-columns: repeat(5, auto);
     grid-row-gap: 1rem;
     margin-bottom: 7rem;
 
@@ -32,7 +32,7 @@
     border-style: solid;
     cursor: pointer;
     transition: .3s ease;
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
     gap: .4rem;
 }
@@ -48,12 +48,20 @@
 }
 
 .order-skuUnit {
-    display: grid;
-    grid-template-columns: repeat(3, 15rem);
+    /* display: grid; */
+    grid-template-columns: repeat(2, 10rem);
 }
 
 .order-skuUnits-price {
     font-weight: 500;
     font-size: 1.2rem;
     margin-bottom: .5rem; 
+}
+
+table{
+    width: 100%;
+}
+
+td{
+    border-bottom: solid;
 }

@@ -54,26 +54,33 @@ function Order() {
             <button className='tailor-info-button' onClick={() => goToInfo()}>Click here for User Details</button>
             <div className='order-title'>All Open Orders</div>
             <div className='orders'>
-                {orders.map((order, index) => {
-                    const skuUnits = order.sku;
-                    return (
-                        <div className='order' key={index} onClick={() => orderTakingHandler(order)}>
-                            <div className='order-skuUnits-title'>This order consist of {skuUnits.length} units:</div>
-                            <div className='order-skuUnits'>
-                                {skuUnits.map((skuUnit, index) => {
+                <table>
+                    {orders.map((order, i) => {
+                        const skuUnits = order.sku;
+                        return (
+
+                            <>{
+                                skuUnits.map((skuUnit, index) => {
                                     return (
-                                        <div className='order-skuUnit' key={index + '0'}>
-                                            <div className='order-skuUnit-name' key={index}>Design name: {skuUnit.name}</div>
-                                            <div className='order-skuUnit-size' key={index}>Size: {skuUnit.size}</div>
-                                            <div className='order-skuUnit-price' key={index}>Price: ₹{skuUnit.price}</div>
-                                        </div>
+                                        <tr className='order' key={i + index + '0'} onClick={() => orderTakingHandler(order)}>
+                                            <td className='order-skuUnits-'>{order.createdAt}</td>
+                                            <td>#{order._id.substring(16).toUpperCase()} </td>
+                                            <td>TOV ₹{order.price}</td>
+                                            <td> {skuUnits.length} units</td>
+                                        {/* <td className='order-skuUnit'> */}
+                                                    <td className='order-skuUnit-name' key={index}>Design: {skuUnit.name} ({skuUnit.size})</td>
+                                                    <td className='order-skuUnit-price' key={index}>Price: ₹{skuUnit.price}</td>
+
+                                        {/* </td> */}
+                                            <td className='order-skuUnits-price'></td>
+                                        </tr>
                                     )
-                                })}
-                            </div>
-                            <div className='order-skuUnits-price'>Total Order Value: ₹{order.price}</div>
-                        </div>
-                    )
-                })}
+                                })
+                            }</>
+
+                        )
+                    })}
+                </table>
             </div>
         </div>
     )
