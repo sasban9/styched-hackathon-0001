@@ -135,12 +135,19 @@ function addOrder() {
 
     const skuArray = []
     let totalPrice = 0
-    const noOfSkusInOrder = Math.floor(Math.random()*5) + 1
+    const displacement = Math.floor(Math.random()*100) + 1
+    // 85% orders have 1 line item, 10% have 2, etc.
+    const noOfSkusInOrder = 
+    (displacement < 85) ? 1 : 
+    (displacement < 95) ? 2 : 
+    (displacement < 98) ? 3 :
+    (displacement < 100) ? 4 : 5
     sizeArray = ['XS', 'S', 'M', 'L', 'XL']
+    // 99% orders will be all items of same size
+    const size = sizeArray[Math.floor(Math.random() * 5)]
 
     for(var index = 0; index < noOfSkusInOrder; index++) {
         const name = 'SKU-' + (Math.floor(Math.random() * 5000) + 1)
-        const size = sizeArray[Math.floor(Math.random() * 5)]
         const price =  Math.floor(Math.random() * 651) + 345
 
         skuArray.push(new Sku({name: name, size: size, price: price}))
@@ -149,7 +156,7 @@ function addOrder() {
     const order = new Order({sku: skuArray, price: totalPrice})
     order.save()
     .then(res => {
-        console.log('New order created')
+        console.log('New order created at ', Date.now())
     }).catch(err => console.log(err))
 }
 
