@@ -50,7 +50,7 @@ function Order() {
     }
 
     return (
-        <div className='Orders'>
+        <div className='Orders' style={{textAlign:'center'}}>
             <button className='tailor-info-button' onClick={() => goToInfo()}>Click here for User Details</button>
             <div className='order-title'>All Open Orders</div>
             <div className='orders'>
@@ -62,18 +62,23 @@ function Order() {
                             <>{
                                 skuUnits.map((skuUnit, index) => {
                                     return (
-                                        <tr className='order' key={i + index + '0'} onClick={() => orderTakingHandler(order)}>
-                                            <td className='order-skuUnits-'>{order.createdAt}</td>
-                                            <td>#{order._id.substring(16).toUpperCase()} </td>
-                                            <td>TOV ₹{order.price}</td>
-                                            <td> {skuUnits.length} units</td>
+                                        <div className='order' key={i + index + '0'} onClick={() => orderTakingHandler(order)}>
+                                            <table>
+                                                <tr style={{color:'white',fontSize:20,lineHeight:3}}>
+                                                    <td style={{background:'green'}}>ACCEPT</td>
+                                                    <td style={{background:'red'}}>REJECT</td>
+                                                </tr>
+                                            </table>
+                                            <h1 rowspan={skuUnits.length}>Commission ₹{Math.floor(skuUnit.price/30)*5}</h1>
+                                            <h3 rowspan={skuUnits.length}>{i} :: {order._id.substring(16).toUpperCase()} ::  {skuUnits.length} </h3>
+                                            <img src={`https://picsum.photos/id/${i%1084}/360/540`} /><br/>
                                         {/* <td className='order-skuUnit'> */}
-                                                    <td className='order-skuUnit-name' key={index}>Design: {skuUnit.name} ({skuUnit.size})</td>
-                                                    <td className='order-skuUnit-price' key={index}>Price: ₹{skuUnit.price}</td>
+                                            <b className='order-skuUnit-name' >{skuUnit.name} ({skuUnit.size})</b> <br/>
+                                            {/* <i className='order-skuUnit-price' >Price: ₹{skuUnit.price}</i> */}
+                                            {order.createdAt && <p className='order-skuUnits-'>ordered on {order.createdAt.substring(0,10)} {order.createdAt.substring(11,16)}</p>}
 
                                         {/* </td> */}
-                                            <td className='order-skuUnits-price'></td>
-                                        </tr>
+                                        </div>
                                     )
                                 })
                             }</>

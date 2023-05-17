@@ -168,7 +168,7 @@ app.listen(8000, () => {
     mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
         .then(() => {
             console.log('Server connected with Database')
-            setInterval(addOrder, 86400)
+            setInterval(addOrder, 864000)
         })
         .catch((err) => console.log(err))
 })
