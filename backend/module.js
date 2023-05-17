@@ -10,7 +10,9 @@ const skuSchema = new mongoose.Schema({
 // Schema of Order
 const orderSchema = new mongoose.Schema({
     sku: [skuSchema],
-    price: Number
+    price: Number,
+},{
+    timestamps: true,
 })
 
 // Schema of tailor
