@@ -25,7 +25,7 @@
     border-style: solid;
     gap: 1rem;
     padding: 1.5rem 1rem 1.5rem 1rem;
-    border-radius: 1rem;
+    
 }
 
 .Info-process-title {
@@ -35,6 +35,7 @@
 
 .Info-process-details {
     display: flex;
+    justify-content: space-between;
     gap: 2rem;
 }
 
@@ -49,28 +50,28 @@
 
 .Info-process-order {
     border-style: none;
-    background-color: grey;
-    border-radius: 1rem;
+    background-color: #ccc;
+    
     gap: 1rem;
     padding: .5rem 3rem .5rem 3rem;
 }
 
 .Info-markAsComplete-button {
-    border-radius: 1rem;
+    
     margin-top: 1rem;
     padding: .5rem 1.5rem .5rem 1.5rem;
     cursor: pointer;
-    background-color: lightblue;
+    background-color: darkblue;
+    color: white;
 }
 
 .Info-complete-orders {
     flex: 1;
     display: flex;
     flex-direction: column;
-    border-style: solid;
     gap: 1rem;
-    padding: 1.5rem 1rem 1.5rem 1rem;
-    border-radius: 1rem;
+    /* padding: 1.5rem 1rem 1.5rem 1rem; */
+    box-shadow: 0 10px 10px #ccc;
 }
 
 .Info-complete-title {
@@ -78,8 +79,11 @@
     font-weight: 500;
 }
 
+.Info-complete-details b {color: olive;}
+
 .Info-complete-details {
     display: flex;
+    justify-content: space-between;
     gap: 2rem;
 }
 
@@ -94,8 +98,8 @@
 
 .Info-complete-order {
     border-style: none;
-    background-color: grey;
-    border-radius: 1rem;
+    background-color: #eee;
+    
     gap: 1rem;
     padding: .5rem 3rem .5rem 3rem;
 }
