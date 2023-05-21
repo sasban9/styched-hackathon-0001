@@ -28,10 +28,19 @@ function Info() {
             })
     }
 
+    // Mark process order as cancel 
+    const markAsCancelHandler = (processOrder) => {
+        axios.post('http://localhost:8000/markAsCancelOrder', { username: tailorUsername, order: processOrder })
+            .then(res => {
+                window.location.reload();
+            })
+    }
+
     return (
         <div>
             <div className='Info-title'>Details of tailor {tailor.name}</div>
             <div className='Info-payment'>Your earn ₹{Math.floor(tailor.payment / 30)*5} so far </div>
+            <div className='Info-commission'>Your negative commission ₹{Math.floor(tailor.negativeCommision / 30)*5} so far </div>
             <div className='Info-order'>
                 <div className='Info-process-orders'>
                     <div className='Info-process-title'>Process Order</div>
@@ -45,6 +54,7 @@ function Info() {
                             <div className='Info-process-details'>
                                 <div className='Info-process-index'><b>#{processOrder._id.substring(16).toUpperCase()}</b><br/>{processOrder.createdAt}<br/>
                                 <button className='Info-markAsComplete-button' onClick={() => markAsCompleteHandler(processOrder)}>Mark as Complete</button>
+                                <button className='Info-markAsCancel-button' onClick={() => markAsCancelHandler(processOrder)}>Mark as Cancel</button>
                                 </div>
                                 <div className='Info-process-order'>
                                     {processOrder.sku?.map((skuUnit) => {

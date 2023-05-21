@@ -58,7 +58,7 @@ app.post('/addTailor', async (req, res) => {
     }
 
     // Create new tailor and add to our database
-    const newTailor = new Tailor({ name: req.body.name, username: req.body.username, processOrders: [], completeOrders: [], todayOrders: [], payment: 0 });
+    const newTailor = new Tailor({ name: req.body.name, username: req.body.username, processOrders: [], completeOrders: [], todayOrders: [], payment: 0, negativeCommision: 0   });
     newTailor.save()
         .then(() => {
             res.send({ code: 2, msg: 'User added successfully' })
@@ -76,6 +76,20 @@ app.post('/markAsCompleteOrder', (req, res) => {
             $inc: {payment: req.body.order.price}
         }
     ).then(() => res.send('Order mark as complete'))
+})
+
+// Mark process order as cancel and move order as open order
+app.post('/markAsCancelOrder', async (req, res) => {
+    await Tailor.updateOne(
+        {username: req.body.username},
+        {
+            $pull: {processOrders: req.body.order},
+            $inc: {negativeCommision: req.body.order.price } 
+        }
+    )
+    const order = new Order(req.body.order)
+    await order.save()
+    res.send('Order mark as cancel')
 })
 
 // Assign order to tailor if it is eligible
@@ -153,7 +167,7 @@ function addOrder() {
         skuArray.push(new Sku({name: name, size: size, price: price}))
         totalPrice+=price
     }
-    const order = new Order({sku: skuArray, price: totalPrice})
+    const order = new Order({sku: skuArray, price: totalPrice, date: getTodayDMY()})
     order.save()
     .then(res => {
         console.log('New order created at ', Date.now())
