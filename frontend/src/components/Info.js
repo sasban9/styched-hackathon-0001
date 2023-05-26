@@ -28,65 +28,81 @@ function Info() {
             })
     }
 
+    const goToOrders = () => {
+        window.location.href = '/' + tailorUsername + '/allOpenOrders';
+    }
+    const goToHome = () => {
+        window.location.href = '/';
+    }
+
     return (
         <div>
-            <div className='Info-title'>Details of tailor {tailor.name}</div>
-            <div className='Info-payment'>Your earn ₹{Math.floor(tailor.payment / 30)*5} so far </div>
+            <div style={{textAlign:'center'}}><button className='all-orders-button' onClick={() => goToHome()}>🏠</button>
+            <button className='all-orders-button' onClick={() => goToOrders()}>OPEN ORDERS &raquo;</button></div>
+
+            <div className='Info-title' style={{textAlign:'center'}}> 🙏 नमस्ते {tailor.name} जी</div>
+            <div className='Info-payment' style={{textAlign:'center'}}>Your commission is ₹{Math.floor(tailor.payment / 30)*5} this week 👍<br/>and ₹{Math.floor(tailor.processOrders?.reduce((total,order) => {return total+order.price},0) / 30)*5} due on next submission...</div>
             <div className='Info-order'>
                 <div className='Info-process-orders'>
-                    <div className='Info-process-title'>Process Order</div>
-                    <div className='Info-complete-details'>
-                        <h4>Order#</h4>
-                        <h4>SKU & Size</h4>
-                        <h4>Commission</h4>
-                    </div>
+                    <div className='Info-complete-title'>Process Order</div>
+                    <div style={{padding:'0 30px 10px'}}>
+                    <table style={{minWidth:540}}><tbody>
+                    <tr className='Info-process-details'>
+                        <th>Order#</th>
+                        <th>SKU & Size</th>
+                        <th>Commission</th>
+                    </tr>
                     {tailor.processOrders?.map((processOrder, index) => {
                         return (
-                            <div className='Info-process-details'>
-                                <div className='Info-process-index'><b>#{processOrder._id.substring(16).toUpperCase()}</b><br/>{processOrder.createdAt}<br/>
-                                <button className='Info-markAsComplete-button' onClick={() => markAsCompleteHandler(processOrder)}>Mark as Complete</button>
-                                </div>
-                                <div className='Info-process-order'>
-                                    {processOrder.sku?.map((skuUnit) => {
+                            <tr className='Info-process-details' key={index}>
+                                <td className='Info-process-index'><b>#{processOrder._id.substring(16).toUpperCase()}</b><br/>
+                                {processOrder.createdAt?.substring(0,10)} {processOrder.createdAt?.substring(11,16)}<br/>
+                                </td>
+                                <td className='Info-process-order'>
+                                    {processOrder.sku?.map((skuUnit,i) => {
                                         return (
-                                            <div className='Info-process-detail'>
+                                            <div className='Info-process-detail' key={i}>
                                                 <div>{skuUnit.name}</div>
                                                 <div>Size: {skuUnit.size}</div>
                                             </div>
                                         )
                                     })}
-                                </div>
-                                <div>INR {Math.floor(processOrder.price/30)*5}</div>
-
-                            </div>
+                                </td>
+                                <td className='inr'>INR {Math.round(processOrder.price/30)*5} <br/><button className='Info-markAsComplete-button' onClick={() => markAsCompleteHandler(processOrder)}>✔️ Complete</button></td>
+                            </tr>
                         )
                     })}
-                </div>
+                </tbody></table></div></div>
                 <div className='Info-complete-orders'>
-                    <div className='Info-complete-title' style={{background:'black', color:'white',padding:10}}>Completed</div>
-                    <div style={{padding:10}}><div className='Info-complete-details'>
-                        <h4>Order#</h4>
-                        <h4>SKU & Size</h4>
-                        <h4>Commission</h4>
-                    </div>
+                    <div className='Info-complete-title'>Completed</div>
+                    <div style={{padding:'0 30px 10px'}}>
+                        <table><tbody>
+                        <tr className='Info-complete-details'>
+                            <th>Order#</th>
+                            <th>SKU & Size</th>
+                            <th>Commission</th>
+                        </tr>
                     {tailor.completeOrders?.map((completeOrder, index) => {
                         return (
-                            <div className='Info-complete-details'>
-                                <div className='Info-complete-index'><b>#{completeOrder._id.substring(16).toUpperCase()}</b><br/>{completeOrder.createdAt}<br/></div>
-                                <div className='Info-complete-order'>
-                                    {completeOrder.sku?.map((skuUnit) => {
+                            <tr className='Info-complete-details' key={index}>
+                                <td className='Info-complete-index'><b>#{completeOrder._id.substring(16).toUpperCase()}</b><br/>
+                                {completeOrder.createdAt?.substring(0,10)} {completeOrder.createdAt?.substring(11,16)}<br/></td>
+                                <td className='Info-complete-order'>
+                                    {completeOrder.sku?.map((skuUnit,i) => {
                                         return (
-                                            <div className='Info-complete-detail'>
+                                            <div className='Info-complete-detail' key={i}>
                                                 <div>{skuUnit.name}</div>
                                                 <div>Size: {skuUnit.size}</div>
                                             </div>
                                         )
                                     })}
-                                </div>
-                                <div>INR {Math.floor(completeOrder.price/30)*5}</div>
-                            </div>
+                                </td>
+                                <td className='inr'>INR {Math.round(completeOrder.price/30)*5}</td>
+                            </tr>
                         )
-                    })}</div>
+                    })}
+                    </tbody></table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -13,47 +13,43 @@
     margin: auto;
     background-color: cyan;
     padding: 1%;
-    width: 20rem;
-    border-radius: 1rem;  
+    width: 20rem;  
     gap: .5rem;
 }
 
 .tailor-input-name {
-    border-radius: 1rem;
     border-color: black;
     text-align: center;
     height: 1.5rem;
 }
 
 .tailor-input-username {
-    border-radius: 1rem;
     border-color: black;
     text-align: center;
     height: 1.5rem;
 }
 
 .tailor-input-button {
-    border-radius: 1rem;
     border-color: black;
     text-align: center;
     width: 7rem;
-    background-color: lightblue;
+    margin: 0 auto;
 }
 
 .tailor {
-    margin: 1.5rem auto auto auto;
-    width: 30rem;
+    margin: 1.5rem;
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
 }
 
 .tailor-info {
     margin:auto;
-    border-style: solid;
-    border-radius: 1rem;
-    border-width: 1px;
-    border-color: black;
+    box-shadow: 0 0 10px #aaa;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-content: center;
+    /* grid-template-columns: repeat(2, 1fr); */
+    width: 20rem;
+    /* justify-content: center; */
     padding: .4rem;
     margin: 1rem 1rem 1rem 1rem;
     cursor: pointer;
@@ -63,8 +59,6 @@
     grid-column-start: 1;
     grid-column-end: 3;
     text-align: center;
-    border-radius: 1rem;
     margin: auto;
     padding: .1rem .9rem .1rem .9rem;
-    background-color: lightblue;
 }

@@ -5,7 +5,7 @@
 }
 
 .tailor-info-button {
-    position: absolute;
+    position: fixed;
     right: 4rem;
     top: 2.5rem;
     border-radius: 1rem;
@@ -26,14 +26,19 @@
 }
 
 .order {
-    margin: 4px;
+    margin: 4px 4px 240px;
     box-shadow: 0 0 6px #ccc;
     text-align: center;
     cursor: pointer;
     transition: 1.3s ease;
     display: inline-block;
-    min-width:600px;min-height: 800px;
+    min-width:300px;min-height: 800px;
     gap: .4rem;
+}
+
+.order img {
+    display: block;
+    min-height: 540px;
 }
 
 .order:hover {

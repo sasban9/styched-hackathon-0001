@@ -13,6 +13,7 @@ function App() {
         <Route path='/:tailorUsername/allOpenOrders' element={<Order />} />
         <Route path='/:tailorUsername/info' element={<Info />} />
       </Routes>
+      <footer style={{height:100,background:'#eefe',marginTop:100,bottom:0}}></footer>
     </div>
   );
 }

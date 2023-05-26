@@ -36,7 +36,7 @@ app.post('/getTailor', async (req, res) => {
 
 // Get all Order data
 app.get('/getOrders', async (req, res) => {
-    const orders = await Order.find({});
+    const orders = await Order.find().sort({_id:-1}).limit(4);;
     res.send(orders);
 })
 

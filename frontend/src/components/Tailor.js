@@ -20,7 +20,7 @@ function Tailor() {
 
     // Redirected to Order page
     const goToTailor = (username) => {
-        window.location.href = username + '/allOpenOrders';
+        window.location.href = username + '/info';
     }
 
     // Function to call backend api for adding new tailor
@@ -56,17 +56,17 @@ function Tailor() {
     return (
         <div className='Tailors'>
             <div className='tailors-title'>Select Tailor Below</div>
-            <div className='tailor-add-form'>
-                <input className='tailor-input-name' value={name} placeholder='Enter name' onChange={(e) => setName(e.target.value)}></input>
-                <input className='tailor-input-username' value={username} placeholder='Enter username' onChange={(e) => setUsername(e.target.value)}></input>
-                <button className='tailor-input-button' onClick={() => addUser()}>ADD USER</button>
-            </div>
             <div className='tailor'>
+                <div className='tailor-info'><input className='tailor-input-name' value={name} placeholder='Enter name' onChange={(e) => setName(e.target.value)}></input>
+                <input className='tailor-input-username' value={username} placeholder='Enter username' onChange={(e) => setUsername(e.target.value)}></input><br/>
+                <button className='tailor-input-button' onClick={() => addUser()}>ADD USER</button></div>
+            {/* </div>
+            <div className='tailor'> */}
                 {tailors.map((tailor) => {
                     return (
                         <div key={tailor.username} className='tailor-info' onClick={() => goToTailor(tailor.username)}>
-                            <div className='tailor-name'>Name: {tailor.name}</div>
-                            <div className='tailor-username'>Username: {tailor.username}</div>
+                            <div><b className='tailor-name'>Name: {tailor.name}</b>
+                            <p className='tailor-username'>Username: {tailor.username}</p></div>
                             <button className='tailor-delete' onClick={() => deteteTailor(tailor.username)}>Delete</button>
                         </div>
                     )
