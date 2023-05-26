@@ -18,7 +18,7 @@ function Info() {
                     setTailor(res.data)
                 }
             })
-    }, [])
+    }, [tailorUsername])
 
     // Mark process order as completed 
     const markAsCompleteHandler = (processOrder) => {
@@ -33,6 +33,7 @@ function Info() {
     }
     const goToHome = () => {
         window.location.href = '/';
+    }
     // Mark process order as cancel 
     const markAsCancelHandler = (processOrder) => {
         axios.post('http://localhost:8000/markAsCancelOrder', { username: tailorUsername, order: processOrder })
@@ -47,9 +48,7 @@ function Info() {
             <button className='all-orders-button' onClick={() => goToOrders()}>OPEN ORDERS &raquo;</button></div>
 
             <div className='Info-title' style={{textAlign:'center'}}> 🙏 नमस्ते {tailor.name} जी</div>
-            <div className='Info-payment' style={{textAlign:'center'}}>Your commission is ₹{Math.floor(tailor.payment / 30)*5} this week 👍<br/>and ₹{Math.floor(tailor.processOrders?.reduce((total,order) => {return total+order.price},0) / 30)*5} due on next submission...</div>
-
-            <div className='Info-commission'>Your negative commission ₹{Math.floor(tailor.negativeCommision / 30)*5} so far </div>
+            <div className='Info-payment' style={{textAlign:'center'}}>Your commission is ₹{Math.floor(tailor.payment / 30)*5} this week 👍<br/>and ₹{Math.floor(tailor.processOrders?.reduce((total,order) => {return total+order.price},0) / 30)*5} due on next submission...<br/>{tailor.negativeCommision && `Your negative commission is ₹${Math.floor(tailor.negativeCommision / 30)*5} so far`} </div>
 
             <div className='Info-order'>
                 <div className='Info-process-orders'>
@@ -57,20 +56,23 @@ function Info() {
                     <div style={{padding:'0 30px 10px'}}>
                     <table style={{minWidth:540}}><tbody>
                     <tr className='Info-process-details'>
+                        <th></th>
                         <th>Order#</th>
                         <th>SKU & Size</th>
                         <th>Commission</th>
+                        <th></th>
                     </tr>
                     {tailor.processOrders?.map((processOrder, index) => {
                         return (
 
-                            <div className='Info-process-details'>
-                                <div className='Info-process-index'><b>#{processOrder._id.substring(16).toUpperCase()}</b><br/>{processOrder.createdAt}<br/>
-                                <button className='Info-markAsComplete-button' onClick={() => markAsCompleteHandler(processOrder)}>Mark as Complete</button>
-                                <button className='Info-markAsCancel-button' onClick={() => markAsCancelHandler(processOrder)}>Mark as Cancel</button>
-                                </div>
-                                <div className='Info-process-order'>
-                                    {processOrder.sku?.map((skuUnit) => {
+                            <tr className='Info-process-details'>
+                                <td>
+                                <button className='Info-markAsComplete-button' onClick={() => markAsCompleteHandler(processOrder)}>✔️ Complete</button>
+                                </td>
+                                <td className='Info-process-index'><b>#{processOrder._id.substring(16).toUpperCase()}</b><br/>
+                                {processOrder.createdAt?.substring(0,10)} {processOrder.createdAt?.substring(11,16)}<br/></td>
+                                <td className='Info-process-order'>
+                                    {processOrder.sku?.map((skuUnit,i) => {
 
                                         return (
                                             <div className='Info-process-detail' key={i}>
@@ -80,7 +82,13 @@ function Info() {
                                         )
                                     })}
                                 </td>
-                                <td className='inr'>INR {Math.round(processOrder.price/30)*5} <br/><button className='Info-markAsComplete-button' onClick={() => markAsCompleteHandler(processOrder)}>✔️ Complete</button></td>
+                                <td className='inr'>INR {Math.round(processOrder.price/30)*5} <br/>
+                                {/* <button className='Info-markAsComplete-button' onClick={() => markAsCompleteHandler(processOrder)}>✔️ Complete</button> */}
+                                </td>
+                                <td>
+                                <button className='Info-markAsCancel-button' onClick={() => markAsCancelHandler(processOrder)}>❌ Cancel</button>
+
+                                </td>
                             </tr>
                         )
                     })}

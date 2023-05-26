@@ -64,20 +64,19 @@
 }
 
 .Info-markAsComplete-button {
-    
+    border: 0;
     padding: .5rem 1.5rem;
     cursor: pointer;
-    background-color: darkblue;
-    color: white;
+    background-color: lightblue;
+    color: black;
 }
 
 .Info-markAsCancel-button {
-    
-    margin-top: .4rem;
+    border: 0;
     padding: .5rem 1.5rem .5rem 1.5rem;
     cursor: pointer;
-    background-color: red;
-    color: white;
+    background-color: lightcoral;
+    color: black;
 }
 
 .Info-complete-orders {
