@@ -57,6 +57,12 @@
     grid-template-columns: repeat(2, 10rem);
 }
 
+.sku-detail {
+    margin-top: 1rem;
+    padding: 1rem;
+    cursor: pointer;
+}
+
 .order-skuUnits-price {
     font-weight: 500;
     font-size: 1.2rem;

@@ -60,8 +60,9 @@ function Order() {
         }
     }
 
-    const getSkuData = () => {
-        axios.post('http://localhost:8000/getSkuData', {page: page})
+    const getSkuData = (event, skuName) => {
+        event.stopPropagation();
+        axios.post('http://localhost:8000/getSkuData', {skuName: skuName})
         .then(res => {
             console.log(res)
         })
@@ -87,6 +88,7 @@ function Order() {
                                             <td style={{ background: 'red' }}>REJECT</td>
                                         </tr>
                                     </table>
+                                    <button className='sku-detail' onClick={(event)=>getSkuData(event, skuUnit.name)}>Get SKU details</button>
                                     <h1 rowspan={skuUnits.length}>Commission ₹{Math.floor(skuUnit.price / 30) * 5}</h1>
                                     <h3 rowspan={skuUnits.length}>{i} :: {order._id.substring(16).toUpperCase()} ::  {skuUnits.length} </h3>
                                     <img src={`https://picsum.photos/id/${i % 1084}/360/540`} /><br />

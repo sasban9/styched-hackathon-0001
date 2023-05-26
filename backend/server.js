@@ -45,6 +45,11 @@ app.post('/getOrders', async (req, res) => {
     res.send(orders);
 })
 
+app.post('/getSkuData', async (req, res) => {
+    const skuData = await Order.find({sku: {$elemMatch: {name: req.body.skuName}}})
+    res.send(skuData)
+})
+
 // Delete paticular tailor from database
 app.post('/deleteTailor', async (req, res) => {
     Tailor.deleteOne({ username: req.body.username })
