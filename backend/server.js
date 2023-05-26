@@ -24,7 +24,7 @@ function getTodayDMY() {
 
 // Get all tailor data 
 app.get('/getTailors', async (req, res) => {
-    const tailors = await Tailor.find({});
+    const tailors = await Tailor.find({})
     res.send(tailors);
 })
 
@@ -34,10 +34,20 @@ app.post('/getTailor', async (req, res) => {
     res.send(tailor);
 })
 
+app.get('/totalPageCount', async (req, res) =>  {
+    const totalPageCount = await Tailor.countDocuments();
+    res.send({totalPage: totalPageCount});
+})
+
 // Get all Order data
-app.get('/getOrders', async (req, res) => {
-    const orders = await Order.find({});
+app.post('/getOrders', async (req, res) => {
+    const orders = await Order.find({}).skip(req.body.page).limit(1);
     res.send(orders);
+})
+
+app.post('/getSkuData', async (req, res) => {
+    const skuData = await Order.find({sku: {$elemMatch: {name: req.body.skuName}}})
+    res.send(skuData)
 })
 
 // Delete paticular tailor from database
@@ -182,7 +192,7 @@ app.listen(8000, () => {
     mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
         .then(() => {
             console.log('Server connected with Database')
-            setInterval(addOrder, 864000)
+            // setInterval(addOrder, 864000)
         })
         .catch((err) => console.log(err))
 })
