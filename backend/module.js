@@ -11,6 +11,7 @@ const skuSchema = new mongoose.Schema({
 const orderSchema = new mongoose.Schema({
     sku: [skuSchema],
     price: Number,
+    date: String,
 },{
     timestamps: true,
 })
@@ -22,7 +23,8 @@ const tailorSchema = new mongoose.Schema({
     processOrders: [orderSchema],
     completeOrders: [orderSchema],
     todayOrders: [{todayOrder: orderSchema, date: String}],
-    payment: Number
+    payment: Number,
+    negativeCommision: Number
 })
 
 
