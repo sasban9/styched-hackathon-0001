@@ -24,7 +24,6 @@ function Order() {
                     axios.post('http://localhost:8000/maintainPerDayOrder', { username: tailorUsername })
                     axios.get('http://localhost:8000/totalPageCount')
                     .then(res => {
-                        console.log(res.data)
                         setTotalPage(res.data.totalPage)
                     })
                 }

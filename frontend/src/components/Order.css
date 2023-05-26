@@ -1,3 +1,8 @@
+.Orders {
+    position: fixed;
+    left: 0;
+    right: 0;
+}
 .order-title {
     margin: 2rem auto;
     font-size: 3rem;
@@ -29,6 +34,13 @@
     height: 10%;
     width: 150%;
     cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.forw-prev-btn:hover {
+    background-color: aqua;
 }
 
 .order {
@@ -40,6 +52,7 @@
     display: inline-block;
     min-width:600px;min-height: 800px;
     gap: .4rem;
+    box-shadow: 0rem 0rem 4rem rgba(0, 0, 1, 1);
 }
 
 .order:hover {
