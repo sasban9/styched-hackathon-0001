@@ -68,6 +68,10 @@ function Order() {
         })
     }
 
+    const saveToLocal = (skuName, status) => {
+        localStorage.setItem(skuName, status)
+    }
+
     return (
         <div className='Orders' style={{ textAlign: 'center' }}>
             <button className='tailor-info-button' onClick={() => goToInfo()}>Click here for User Details</button>
@@ -78,14 +82,16 @@ function Order() {
                     {orders.map((order, i) => {
                         const skuUnits = order.sku;
                         const skuUnit = order.sku[0];
-                        console.log(skuUnits)
+                        if (localStorage.getItem(skuUnit.name) != null) {
+                            setPage(Math.floor(Math.random() * (totalPage + 1)));
+                        }
                         return (
                             <>
                                 <div className='order' key={i + 1 + '0'} onClick={() => orderTakingHandler(order)}>
                                     <table>
                                         <tr style={{ color: 'white', fontSize: 20, lineHeight: 3 }}>
-                                            <td style={{ background: 'green' }}>ACCEPT</td>
-                                            <td style={{ background: 'red' }}>REJECT</td>
+                                            <td style={{ background: 'green' }} onClick={() => saveToLocal(skuUnit.name, 'accept')}>ACCEPT</td>
+                                            <td style={{ background: 'red' }} onClick={() => saveToLocal(skuUnit.name, 'reject')}>REJECT</td>
                                         </tr>
                                     </table>
                                     <button className='sku-detail' onClick={(event)=>getSkuData(event, skuUnit.name)}>Get SKU details</button>
