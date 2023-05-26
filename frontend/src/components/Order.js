@@ -6,6 +6,8 @@ import './Order.css';
 function Order() {
 
     const { tailorUsername } = useParams();
+    const [page, setPage] = useState(0);
+    const [totalPage, setTotalPage] = useState(100);
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
@@ -20,15 +22,24 @@ function Order() {
                 } else {
                     // Maintain the per day order  
                     axios.post('http://localhost:8000/maintainPerDayOrder', { username: tailorUsername })
-
-                    // Fetch all order data
-                    axios.get('http://localhost:8000/getOrders')
-                        .then(res => {
-                            setOrders(res.data)
-                        })
+                    axios.get('http://localhost:8000/totalPageCount')
+                    .then(res => {
+                        console.log(res.data)
+                        setTotalPage(res.data.totalPage)
+                    })
                 }
             })
     }, [])
+
+    useEffect(() => {
+        // Fetch all order data
+        console.log(page)
+        axios.post('http://localhost:8000/getOrders', {page: page})
+        .then(res => {
+            console.log(res)
+            setOrders(res.data)
+        })
+    }, [page])
 
 
     const goToInfo = () => {
@@ -49,43 +60,47 @@ function Order() {
         }
     }
 
+    const getSkuData = () => {
+        axios.post('http://localhost:8000/getSkuData', {page: page})
+        .then(res => {
+            console.log(res)
+        })
+    }
+
     return (
-        <div className='Orders' style={{textAlign:'center'}}>
+        <div className='Orders' style={{ textAlign: 'center' }}>
             <button className='tailor-info-button' onClick={() => goToInfo()}>Click here for User Details</button>
             <div className='order-title'>All Open Orders</div>
             <div className='orders'>
+                <button className='forw-prev-btn' onClick={() => setPage(oldPage => Math.max(0, oldPage - 1))}>Previous</button>
                 <table>
                     {orders.map((order, i) => {
                         const skuUnits = order.sku;
+                        const skuUnit = order.sku[0];
+                        console.log(skuUnits)
                         return (
-
-                            <>{
-                                skuUnits.map((skuUnit, index) => {
-                                    return (
-                                        <div className='order' key={i + index + '0'} onClick={() => orderTakingHandler(order)}>
-                                            <table>
-                                                <tr style={{color:'white',fontSize:20,lineHeight:3}}>
-                                                    <td style={{background:'green'}}>ACCEPT</td>
-                                                    <td style={{background:'red'}}>REJECT</td>
-                                                </tr>
-                                            </table>
-                                            <h1 rowspan={skuUnits.length}>Commission ₹{Math.floor(skuUnit.price/30)*5}</h1>
-                                            <h3 rowspan={skuUnits.length}>{i} :: {order._id.substring(16).toUpperCase()} ::  {skuUnits.length} </h3>
-                                            <img src={`https://picsum.photos/id/${i%1084}/360/540`} /><br/>
-                                        {/* <td className='order-skuUnit'> */}
-                                            <b className='order-skuUnit-name' >{skuUnit.name} ({skuUnit.size})</b> <br/>
-                                            {/* <i className='order-skuUnit-price' >Price: ₹{skuUnit.price}</i> */}
-                                            {order.createdAt && <p className='order-skuUnits-'>ordered on {order.createdAt.substring(0,10)} {order.createdAt.substring(11,16)}</p>}
-
-                                        {/* </td> */}
-                                        </div>
-                                    )
-                                })
-                            }</>
-
+                            <>
+                                <div className='order' key={i + 1 + '0'} onClick={() => orderTakingHandler(order)}>
+                                    <table>
+                                        <tr style={{ color: 'white', fontSize: 20, lineHeight: 3 }}>
+                                            <td style={{ background: 'green' }}>ACCEPT</td>
+                                            <td style={{ background: 'red' }}>REJECT</td>
+                                        </tr>
+                                    </table>
+                                    <h1 rowspan={skuUnits.length}>Commission ₹{Math.floor(skuUnit.price / 30) * 5}</h1>
+                                    <h3 rowspan={skuUnits.length}>{i} :: {order._id.substring(16).toUpperCase()} ::  {skuUnits.length} </h3>
+                                    <img src={`https://picsum.photos/id/${i % 1084}/360/540`} /><br />
+                                    <td className='order-skuUnit'>
+                                        <b className='order-skuUnit-name' >{skuUnit.name} ({skuUnit.size})</b> <br />
+                                        <i className='order-skuUnit-price' >Price: ₹{skuUnit.price}</i>
+                                        {order.createdAt && <p className='order-skuUnits-'>ordered on {order.createdAt.substring(0, 10)} {order.createdAt.substring(11, 16)}</p>}
+                                    </td>
+                                </div>
+                            </>
                         )
                     })}
                 </table>
+                <button className='forw-prev-btn' onClick={() => setPage(oldPage => Math.min(oldPage + 1, totalPage -1))}>forward</button>
             </div>
         </div>
     )
